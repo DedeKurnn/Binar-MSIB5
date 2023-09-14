@@ -1,12 +1,17 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import MainPage from "./components/MainPage";
+import DetailPage from "./components/DetailPage";
 
 function App() {
 	const routes = createBrowserRouter([
 		{
 			path: "/",
 			element: <MainPage />,
+		},
+		{
+			path: ":id",
+			element: <DetailPage />,
 		},
 	]);
 

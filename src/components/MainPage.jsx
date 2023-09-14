@@ -19,6 +19,18 @@ const MainPage = () => {
 		setData(data.filter((item) => item.id !== id));
 	};
 
+	const completedHandler = (isChecked, id) => {
+		let itemIndex = data.findIndex((item) => item.id === id);
+		if (itemIndex !== -1) {
+			const newData = [...data];
+			newData[itemIndex] = {
+				...newData[itemIndex],
+				completed: isChecked,
+			};
+			setData(newData);
+		}
+	};
+
 	return (
 		<main className="container">
 			<h1 className="fw-bold text-center mb-4">Aplikasi Todo</h1>
@@ -60,6 +72,7 @@ const MainPage = () => {
 								<DataItem
 									data={item}
 									onDeleteData={deleteDataHandler}
+									onChecked={completedHandler}
 								/>
 							</tr>
 						))}
