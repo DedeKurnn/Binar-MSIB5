@@ -1,10 +1,12 @@
 import { InfoSquareFill, TrashFill } from "react-bootstrap-icons";
 
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { DataContext } from "../context/dataContext";
 
-const DataItem = ({ data, onDeleteData, onChecked }) => {
+const DataItem = ({ data }) => {
+	const { deleteDataHandler, completedHandler } = useContext(DataContext);
 	const [isCompleted, setIsCompleted] = useState(data.completed);
 	const navigate = useNavigate();
 
@@ -26,7 +28,7 @@ const DataItem = ({ data, onDeleteData, onChecked }) => {
 					</button>
 					<button
 						className="btn"
-						onClick={() => onDeleteData(data.id)}
+						onClick={() => deleteDataHandler(data.id)}
 					>
 						<TrashFill className="text-danger" />
 					</button>
@@ -37,8 +39,8 @@ const DataItem = ({ data, onDeleteData, onChecked }) => {
 						id="flexCheckChecked"
 						checked={isCompleted}
 						onChange={() => {
+							completedHandler(data.id);
 							setIsCompleted(!isCompleted);
-							onChecked(isCompleted, data.id);
 						}}
 					/>
 				</div>
@@ -49,8 +51,6 @@ const DataItem = ({ data, onDeleteData, onChecked }) => {
 
 DataItem.propTypes = {
 	data: PropTypes.object,
-	onDeleteData: PropTypes.func,
-	onChecked: PropTypes.func,
 };
 
 export default DataItem;

@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import MainPage from "./components/MainPage";
 import DetailPage from "./components/DetailPage";
+import AddData from "./components/AddData";
 
 function App() {
 	const routes = createBrowserRouter([
@@ -12,6 +13,10 @@ function App() {
 		{
 			path: ":id",
 			element: <DetailPage />,
+		},
+		{
+			path: "/new",
+			element: <AddData />,
 		},
 	]);
 

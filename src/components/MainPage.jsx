@@ -1,11 +1,15 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import dataExercise from "../constants/dataexercise2.json";
+
 import DataItem from "./DataItem";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { DataContext } from "../context/dataContext";
 
 const MainPage = () => {
-	const [data, setData] = useState(dataExercise);
+	const { data } = useContext(DataContext);
 	const [filter, setFilter] = useState("all");
+	const navigate = useNavigate();
 
 	const filteredData =
 		filter === "all"
@@ -15,25 +19,9 @@ const MainPage = () => {
 			: filter === "todo" &&
 			  data.filter((item) => item.completed === false);
 
-	const deleteDataHandler = (id) => {
-		setData(data.filter((item) => item.id !== id));
-	};
-
-	const completedHandler = (isChecked, id) => {
-		let itemIndex = data.findIndex((item) => item.id === id);
-		if (itemIndex !== -1) {
-			const newData = [...data];
-			newData[itemIndex] = {
-				...newData[itemIndex],
-				completed: isChecked,
-			};
-			setData(newData);
-		}
-	};
-
 	return (
 		<main className="container">
-			<h1 className="fw-bold text-center mb-4">Aplikasi Todo</h1>
+			<h1 className="fw-bold text-center mb-4 mt-4">Aplikasi Todo</h1>
 			<div className="row">
 				<div className="col-sm-8 d-flex gap-2">
 					<button
@@ -55,7 +43,12 @@ const MainPage = () => {
 						Todo
 					</button>
 				</div>
-				<button className="col-sm-4 btn btn-primary">Add</button>
+				<button
+					className="col-sm-4 btn btn-primary"
+					onClick={() => navigate("/new")}
+				>
+					Add
+				</button>
 			</div>
 			<div className="table-responsive">
 				<table className="table table-stripped">
@@ -69,11 +62,7 @@ const MainPage = () => {
 					<tbody>
 						{filteredData.map((item) => (
 							<tr key={item.id}>
-								<DataItem
-									data={item}
-									onDeleteData={deleteDataHandler}
-									onChecked={completedHandler}
-								/>
+								<DataItem data={item} />
 							</tr>
 						))}
 					</tbody>
