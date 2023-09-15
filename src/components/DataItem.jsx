@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataContext } from "../context/dataContext";
 
-const DataItem = ({ data }) => {
+export default function DataItem({ data }) {
 	const { deleteDataHandler, completedHandler } = useContext(DataContext);
 	const [isCompleted, setIsCompleted] = useState(data.completed);
 	const navigate = useNavigate();
@@ -13,7 +13,11 @@ const DataItem = ({ data }) => {
 	return (
 		<>
 			<td>{data.id}</td>
-			<td className={`${isCompleted && "text-danger todo-completed"}`}>
+			<td
+				className={`${
+					isCompleted && "text-danger todo-completed"
+				} w-100`}
+			>
 				{data.title}
 			</td>
 			<td>
@@ -47,10 +51,8 @@ const DataItem = ({ data }) => {
 			</td>
 		</>
 	);
-};
+}
 
 DataItem.propTypes = {
 	data: PropTypes.object,
 };
-
-export default DataItem;

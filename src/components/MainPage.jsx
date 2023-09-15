@@ -50,10 +50,10 @@ const MainPage = () => {
 					Add
 				</button>
 			</div>
-			<div className="table-responsive">
+			<div className="table-responsive mt-3">
 				<table className="table table-stripped">
 					<thead>
-						<tr>
+						<tr className="fw-bold">
 							<td>No</td>
 							<td>Data</td>
 							<td>Aksi</td>
