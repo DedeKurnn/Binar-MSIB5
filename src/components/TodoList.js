@@ -3,10 +3,13 @@ import TodoItem from "./TodoItem";
 
 const TodoList = ({ isRefresh, setRefresh }) => {
 	const [todos, setTodos] = useState([]);
+	// Untuk filter todo
 	const [filter, setFilter] = useState("all");
+	// Untuk search todo
 	const [query, setQuery] = useState("");
 	const [queryResults, setQueryResults] = useState([]);
 
+	// Untuk ambil data todo dari json-server
 	useEffect(() => {
 		if (isRefresh) {
 			fetch("http://localhost:8000/todos")
@@ -27,12 +30,15 @@ const TodoList = ({ isRefresh, setRefresh }) => {
 		}
 	}, [isRefresh, setRefresh]);
 
+	// Untuk fitur search
 	const searchHandler = () => {
+		// Cek jika searchnya kosong/tidak, kalau kosong direset
 		if (query.length === 0) {
 			setQueryResults([]);
 			return;
 		}
 
+		// Kalau enggak diisi dengan todo yang cocok dengan input
 		setQueryResults(
 			todos.filter((todo) =>
 				todo.task.toLowerCase().includes(query.toLowerCase())
@@ -42,6 +48,7 @@ const TodoList = ({ isRefresh, setRefresh }) => {
 
 	const results = queryResults.length !== 0 ? queryResults : todos;
 
+	// Untuk filter
 	const filteredTodos =
 		filter === "all"
 			? results
